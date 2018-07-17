@@ -1,0 +1,10 @@
+template_path: remote-templates/vpc.yaml
+stack_name: sandcastlevpc
+dependencies:
+  - bootstrap
+parameters:
+  VpcSubnetPrefix: "10.23"
+  VpcName: sandcastlevpc
+hooks:
+  before_update:
+    - !cmd "curl https://raw.githubusercontent.com/Sage-Bionetworks/aws-infra/master/templates/vpc.yaml --create-dirs -o remote-templates/vpc.yaml"
