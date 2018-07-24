@@ -1,0 +1,8 @@
+template_path: templates/genie.yaml
+stack_name: genie
+dependencies:
+  - essentials
+  - sandcastlevpc
+parameters:
+  ComputeImageId: ami-283da057
+  ContainerImage: sagebionetworks/genie:validation1.0.0
