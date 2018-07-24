@@ -1,5 +1,7 @@
 # Overview
 Install, configure and manage the AWS org-sagebase-sandbox account.
+This account is for development of new ideas, once initial setup
+and configuration is working we may move it to other accounts. 
 
 
 ## Instructions to create or update CF stacks
