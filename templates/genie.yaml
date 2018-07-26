@@ -10,7 +10,7 @@ Parameters:
   ContainerImage:
     Description: The Genie docker container image
     Type: String
-    Default: 'sagebionetworks/genie:validation1.0.0'
+    Default: 'sagebionetworks/genie:validation1.1.0'
 
 Resources:
   BatchServiceRole:
