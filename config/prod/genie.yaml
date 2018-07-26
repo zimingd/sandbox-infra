@@ -5,4 +5,4 @@ dependencies:
   - sandcastlevpc
 parameters:
   ComputeImageId: ami-283da057
-  ContainerImage: sagebionetworks/genie:validation1.0.0
+  ContainerImage: sagebionetworks/genie:validation1.1.0
