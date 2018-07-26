@@ -43,7 +43,7 @@ Resources:
         Type: EC2
         MaxvCpus: 256
         SecurityGroupIds:
-          - ImportValue us-east-1-sandcastlevpc-VpnSecurityGroup
+          - !ImportValue us-east-1-sandcastlevpc-VpnSecurityGroup
         Subnets:
           - !ImportValue us-east-1-sandcastlevpc-PrivateSubnet
           - !ImportValue us-east-1-sandcastlevpc-PrivateSubnet1
