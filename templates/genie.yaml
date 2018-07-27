@@ -6,11 +6,9 @@ Parameters:
   ComputeImageId:
     Description: The Genie compute resource image ID
     Type: 'AWS::EC2::Image::Id'
-    Default: 'ami-283da057'
   ContainerImage:
     Description: The Genie docker container image
     Type: String
-    Default: 'sagebionetworks/genie:validation1.1.0'
 
 Resources:
   BatchServiceRole:
