@@ -51,7 +51,7 @@ Resources:
         InstanceRole: !GetAtt BatchInstanceProfile.Arn
         InstanceTypes:
           - optimal
-        DesiredvCpus: 0
+        DesiredvCpus: 8
   BatchJobQueue:
     Type: "AWS::Batch::JobQueue"
     Properties:
