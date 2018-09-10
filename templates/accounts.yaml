@@ -42,6 +42,16 @@ Resources:
       LoginProfile:
         Password: !Ref InitNewUserPassword
         PasswordResetRequired: true
+  AWSIAMPhilSnyderUser:
+    Type: 'AWS::IAM::User'
+    Properties:
+      UserName: phil.snyder@sagebase.org
+      Groups:
+        - !Ref AWSIAMAllUsersGroup
+        - !Ref AWSIAMDeveloperUsersGroup
+      LoginProfile:
+        Password: !Ref InitNewUserPassword
+        PasswordResetRequired: true
   AWSIAMKennethDailyUser:
     Type: 'AWS::IAM::User'
     Properties:
@@ -93,6 +103,7 @@ Resources:
                 - !GetAtt AWSIAMXavierSchildwachterUser.Arn
                 - !GetAtt AWSIAMKhaiDoUser.Arn
                 - !GetAtt AWSIAMThomasYuUser.Arn
+                - !GetAtt AWSIAMPhilSnyderUser.Arn
             Action:
               - "sts:AssumeRole"
       Path: "/"
