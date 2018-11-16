@@ -96,8 +96,12 @@ Resources:
         Vcpus: 8
         Memory: 8000
         Command:
-          - bash
-          - validateGENIE.sh
+          - python
+          - input_to_database.py
+          - vcf 
+          - --pemFile 
+          - /root/.ssh/genie.pem
+          - --onlyValidate
         Volumes:
           - Host:
               SourcePath: "/home/ec2-user/.ssh/genie.pem"
@@ -126,7 +130,7 @@ Resources:
         Memory: 8000
         Command:
           - python
-          - GENIE.py 
+          - input_to_database.py
           - main 
           - --pemFile 
           - /root/.ssh/genie.pem
@@ -143,6 +147,56 @@ Resources:
           - ContainerPath: "/root/.ssh/genie.pem"
             ReadOnly: false
             SourceVolume: geniePem
+  VcfBatchJob:
+    Type: 'AWS::Batch::JobDefinition'
+    Properties:
+      Type: container
+      JobDefinitionName: !Join
+        - '-'
+        - - !Ref AWS::StackName
+          - "job"
+          - "mafprocess"
+      ContainerProperties:
+        Image: !Ref MutationImage
+        Vcpus: 8
+        Memory: 32000
+        Command:
+          - python
+          - input_to_database.py
+          - vcf
+          - --pemFile 
+          - /root/.ssh/genie.pem
+          - --vcf2mafPath
+          - /root/vcf2maf-1.6.14
+          - --vepPath
+          - /root/vep
+          - --vepData
+          - /root/.vep
+        Volumes:
+          - Host:
+              SourcePath: "/home/ec2-user/.ssh/genie.pem"
+            Name: geniePem
+          - Host:
+              SourcePath: "/home/ec2-user/vep"
+            Name: vepPath
+          - Host:
+              SourcePath: "/home/ec2-user/.vep"
+            Name: vepData
+        Environment:
+          - Name: GENIE_PASS
+            Value: (b'\x1b\x1f\xc8\xdb\x9f\x03\x0c\xf6\xd4\x95NI\x06\x97e\xda\x88i~\x89\x9a"\x19ON\x8c\x01\x9a\xb4\xaat\x970\xb0\xeel\xae\t\'\xdb\xf3XUQw\xdb\xe7\x11\xd3\x0bf\xc6\xaf\xae\x11\xe2\xa9W\x8b\x08\xcb\x92\xc5\x8f3-\xf8\x92[\x8b\xb8\xe0\xcc\x87\xc09\xa5\rw\x03\xbc\xa4\xa6Y\xa1\x87\x8d\xe6G\xba5\xbb\xa4\x84xl\xba\xa1\x05\xa6\xc7\x1d&N>\xb7\xf0\x1b\x19#E\xb1\xd5\xaf\xc3\xafU,\xfbb\x95\x9df\xeb\xfe&\x0f\xaa',)
+          - Name: GENIE_USER
+            Value: genieRunner
+        MountPoints:
+          - ContainerPath: "/root/.ssh/genie.pem"
+            ReadOnly: false
+            SourceVolume: geniePem
+          - ContainerPath: "/root/vep"
+            ReadOnly: false
+            SourceVolume: vepPath
+          - ContainerPath: "/root/.vep"
+            ReadOnly: false
+            SourceVolume: vepData
   MafBatchJob:
     Type: 'AWS::Batch::JobDefinition'
     Properties:
@@ -158,7 +212,7 @@ Resources:
         Memory: 32000
         Command:
           - python
-          - GENIE.py 
+          - input_to_database.py
           - maf
           - --pemFile 
           - /root/.ssh/genie.pem
