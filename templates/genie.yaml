@@ -155,7 +155,7 @@ Resources:
         - '-'
         - - !Ref AWS::StackName
           - "job"
-          - "mafprocess"
+          - "vcfprocess"
       ContainerProperties:
         Image: !Ref MutationImage
         Vcpus: 8
